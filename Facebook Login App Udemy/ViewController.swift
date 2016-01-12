@@ -27,7 +27,7 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         if FBSDKAccessToken.currentAccessToken() != nil {
             statusLabel.text = "You are logged in as"
             
-        displayName()
+            displayName()
             
         } else {
             statusLabel.text = "You are logged out!"
@@ -43,11 +43,16 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
             
             let name = result.valueForKey("name") as! String
             self.nameLabel.text = name
-            
-            
         }
     }
 
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        print("User is Logged In")
+    }
+    
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        print("User Logged Out")
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
