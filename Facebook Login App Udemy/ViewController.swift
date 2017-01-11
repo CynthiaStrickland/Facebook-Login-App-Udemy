@@ -21,10 +21,10 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         super.viewDidLoad()
         
         let loginButton: FBSDKLoginButton = FBSDKLoginButton()
-        loginButton.center = CGPoint(x: CGRectGetMidX(self.view.frame), y: CGRectGetHeight(self.view.frame)-loginButton.frame.height)
+        loginButton.center = CGPoint(x: self.view.frame.midX, y: self.view.frame.height-loginButton.frame.height)
         self.view.addSubview(loginButton)
         
-        if FBSDKAccessToken.currentAccessToken() != nil {
+        if FBSDKAccessToken.current() != nil {
             statusLabel.text = "You are logged in as"
             
             displayName()
@@ -39,18 +39,18 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         let graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "Me", parameters: nil)
         
-        graphRequest.startWithCompletionHandler { (FBSDKGraphRequestConnection, result, error) -> Void in
+        graphRequest.start { (FBSDKGraphRequestConnection, result, error) -> Void in
             
-            let name = result.valueForKey("name") as! String
+            let name = result.value(forKey: "name") as! String
             self.nameLabel.text = name
         }
     }
 
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         print("User is Logged In")
     }
     
-    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
         print("User Logged Out")
     }
     override func didReceiveMemoryWarning() {
